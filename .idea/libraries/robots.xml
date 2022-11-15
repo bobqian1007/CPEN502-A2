@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="robots">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/robots/org.ubc.cpen502.robotlut.LUTRobot_1.0.B.jar!/" />
+      <root url="jar://$PROJECT_DIR$/robots/org.ubc.cpen502.robotlut.LUTRobot_1.0.B.E02.jar!/" />
+      <root url="jar://$PROJECT_DIR$/robots/org.ubc.cpen502.robotlut.LUTRobot_1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/robots/org.ubc.cpen502.robotlut.LUTRobot_1.0.N.jar!/" />
+      <root url="jar://$PROJECT_DIR$/robots/org.ubc.cpen502.robotlut.LUTRobot_1.0.I.jar!/" />
+      <root url="jar://$PROJECT_DIR$/robots/org.ubc.cpen502.robotlut.LUTRobot_1.0.P.jar!/" />
+      <root url="jar://$PROJECT_DIR$/robots/org.ubc.cpen502.robotlut.LUTRobot_1.0.B.E04.jar!/" />
+      <root url="jar://$PROJECT_DIR$/robots/org.ubc.cpen502.robotlut.LUTRobot_1.0.B.E08.jar!/" />
+      <root url="jar://$PROJECT_DIR$/robots/org.ubc.cpen502.robotlut.LUTRobot_1.0.B.E06.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

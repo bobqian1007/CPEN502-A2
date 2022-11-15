@@ -6,7 +6,7 @@ import java.io.*;
 public class LogFile {
     public void writeToFile(File fileToWrite, double winRate, int roundCount) {
         try{
-            RobocodeFileWriter fileWriter = new RobocodeFileWriter(fileToWrite.getAbsolutePath(), false);
+            RobocodeFileWriter fileWriter = new RobocodeFileWriter(fileToWrite.getAbsolutePath(), true);
             fileWriter.write(roundCount + " " + Double.toString(winRate) + "\r\n");
             fileWriter.close();
         }

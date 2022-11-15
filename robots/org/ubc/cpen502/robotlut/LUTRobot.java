@@ -41,17 +41,17 @@ public class LUTRobot extends AdvancedRobot {
     public double dis = 0.0;
 
     // Whether take immediate rewards
-    public static boolean takeImmediate = true;
+    public static boolean takeImmediate = false;
 
     // Whether take on-policy algorithm
-    public static boolean onPolicy = true;
+    public static boolean onPolicy = false;
 
     // Discount factor
     private double gamma = 0.9;
     // Learning rate
     private double alpha = 0.1;
     // Random number for epsilon-greedy policy
-    private double epsilon = 0;
+    private double epsilon = 0.0;
     // Q
     private double Q = 0.0;
     // Reward
@@ -77,13 +77,13 @@ public class LUTRobot extends AdvancedRobot {
     public static String fileToSaveLUT = LUTRobot.class.getSimpleName() + "-"  + "LUT";
     static LogFile log = new LogFile();
 
-//    public static LookUpTable lut = new LookUpTable(HP.values().length,
-//            HP.values().length,
-//            Distance.values().length,
-//            Distance.values().length,
-//            Action.values().length);
+    public static LookUpTable lut = new LookUpTable(HP.values().length,
+            HP.values().length,
+            Distance.values().length,
+            Distance.values().length,
+            Action.values().length);
 
-     private LookUpTable lut;
+     // private LookUpTable lut;
 
     // Get the level of HP
     public HP getHPLevel(double hp) {
@@ -186,7 +186,7 @@ public class LUTRobot extends AdvancedRobot {
         setBodyColor(Color.blue);
         setRadarColor(Color.white);
         curMyHP = HP.high;
-        loadTable();
+        // loadTable();
         while (true) {
             switch (myOperationMode) {
                 case onScan: {
@@ -333,7 +333,7 @@ public class LUTRobot extends AdvancedRobot {
         Q = calQ(reward, onPolicy);
         lut.setQValue(indexes, Q);
         winRound++;
-        saveTable();
+        //saveTable();
         totalRound++;
         if((totalRound % 100 == 0) && (totalRound != 0)){
             winPercentage = (double) winRound / 100;
@@ -359,7 +359,7 @@ public class LUTRobot extends AdvancedRobot {
                 preAction.ordinal()};
         Q = calQ(reward, onPolicy);
         lut.setQValue(indexes, Q);
-        saveTable();
+        //saveTable();
         totalRound++;
         if((totalRound % 100 == 0) && (totalRound != 0)){
             winPercentage = (double) winRound / 100;

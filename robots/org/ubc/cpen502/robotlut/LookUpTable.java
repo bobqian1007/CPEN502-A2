@@ -93,29 +93,45 @@ public class LookUpTable implements LUTInterface{
         }
         saveFile.close();
     }
-
-    public void load(String argFileName) throws IOException {
-        try {
-            BufferedReader in = new BufferedReader(new FileReader(argFileName));
-            for(int i = 0; i < myHP; i++) {
-                for(int j = 0; j < enemyHP; j++) {
-                    for(int k = 0; k < distance; k++) {
-                        for(int m = 0; m < distanceWall; m++) {
-                            for(int n = 0; n < actionSize; n++) {
-                                String line = in.readLine();
-                                String [] args = line.split(",");
-                                System.out.println(line);
-                                double q = Double.parseDouble(args[5]);
-                                LUT[i][j][k][m][n] = q;
-                            }
+    public void save(File file) throws IOException {
+        RobocodeFileWriter fileWriter = new RobocodeFileWriter(file.getAbsolutePath(), false);
+        for(int i = 0; i < myHP; i++) {
+            for(int j = 0; j < enemyHP; j++) {
+                for(int k = 0; k < distance; k++) {
+                    for(int m = 0; m < distanceWall; m++) {
+                        for(int n = 0; n < actionSize; n++) {
+                            String s = String.format("%d,%d,%d,%d,%d,%3f,%d", i,j, k, m, n, LUT[i][j][k][m][n],visit[i][j][k][m][n]);
+                            fileWriter.write(s + "\r\n");
                         }
                     }
                 }
             }
-            in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+        fileWriter.close();
+    }
+
+    public void load(String argFileName) throws IOException {
+        FileInputStream inputFile = new FileInputStream(argFileName);
+        BufferedReader inputReader = new BufferedReader(new InputStreamReader(inputFile));
+
+        // Check that the maxIndex matches
+        for(int i = 0; i < myHP; i++) {
+            for(int j = 0; j < enemyHP; j++) {
+                for(int k = 0; k < distance; k++) {
+                    for(int m = 0; m < distanceWall; m++) {
+                        for(int n = 0; n < actionSize; n++) {
+                            String line = inputReader.readLine();
+                            String [] args = line.split(",");
+                            System.out.println(line);
+                            double q = Double.parseDouble(args[5]);
+                            LUT[i][j][k][m][n] = q;
+                        }
+                    }
+                }
+            }
+        }
+        inputReader.close();
+        inputFile.close();
     }
     public int visit(double[] x) throws ArrayIndexOutOfBoundsException {
         if(x.length != 5){
