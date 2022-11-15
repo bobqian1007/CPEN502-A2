@@ -3,15 +3,23 @@ import os
 import re
 def plot(res, str, path):
     global label3_c, label1_c, label2_c, label4_c, label1_a, label2_a, label3_a, label4_a
-    path_save = r"../robots/org/ubc/cpen/robotlut/LUTRobot.data/log_f2/"  # training result  documents path
+    path_save = r"../graph/"  # training result  documents path
     filename = []
     for file in res:
         if re.search(r'log', file):
             filename.append(file)
-    if len(filename) == 1:
-        logname = filename[0]
+    if len(filename) == 2:
+        logname = ""
+        logname_base = ""
+        for name in filename:
+            if "a0" in name:
+                logname_base = name
+            else:
+                logname = name
         round = []
+        round_base = []
         winningrate = []
+        winningrate_base = []
         f = open(path+"/"+logname)
         line = f.readline()
         while line:
@@ -19,7 +27,17 @@ def plot(res, str, path):
             winningrate.append(float(line.split(' ')[1].replace('\n', '').replace('\r', '')))
             line = f.readline()
         f.close()
-        plt.plot(round, winningrate)
+        with open(path+"/"+logname_base) as f_base:
+            line_base = f_base.readline()
+            while line:
+                round_base.append(float(line_base.split(' ')[0]))
+                winningrate_base.append(float(line_base.split(' ')[1].replace('\n', '').replace('\r', '')))
+                line_base = f_base.readline()
+
+        graphs = plt.plot(round, winningrate,round_base,winningrate_base)
+        plt.setp(graphs[0], color='blue', label="a = 0.1")
+        plt.setp(graphs[1], color='red', label="a = 0.0")
+        plt.legend(loc=4)
         plt.xlabel('# of 100 rounds')
         plt.ylabel('Winning rate')
         plt.title("2-a)-progress of learning with winning rate")
@@ -173,7 +191,7 @@ def plot(res, str, path):
         plt.title("behaviour with terminal rewards VS intermediate rewards(off-policy)")
         plt.savefig(path_save + "result/" + "2c-offPolicy" + ".png")
         plt.show()
-    elif (len(filename) == 4) & (str == "3-a)"):
+    elif (len(filename) == 5) & (str == "3-a)"):
         logname1_3a = filename[0]
         label1_3a = "e: " + logname1_3a.split("-")[-2]
         logname2_3a = filename[1]
@@ -182,14 +200,18 @@ def plot(res, str, path):
         label3_3a = "e: " + logname3_3a.split("-")[-2]
         logname4_3a = filename[3]
         label4_3a = "e: " + logname4_3a.split("-")[-2]
-        if label1_3a == "e: 0.1":
-            label1_3a = "myRobot(e=0.1)"
-        if label2_3a == "e: 0.1":
-            label2_3a = "myRobot(e=0.1)"
-        if label3_3a == "e: 0.1":
-            label3_3a = "myRobot(e=0.1)"
-        if label4_3a == "e: 0.1":
-            label4_3a = "myRobot(e=0.1)"
+        logname5_3a = filename[4]
+        label5_3a = "e: " + logname5_3a.split("-")[-2]
+        if label1_3a == "e: 0.2":
+            label1_3a = "myRobot(e=0.2)"
+        if label2_3a == "e: 0.2":
+            label2_3a = "myRobot(e=0.2)"
+        if label3_3a == "e: 0.2":
+            label3_3a = "myRobot(e=0.2)"
+        if label4_3a == "e: 0.2":
+            label4_3a = "myRobot(e=0.2)"
+        if label5_3a == "e: 0.2":
+            label5_3a = "myRobot(e=0.2)"
         # logname5 = filename[4]
         # label5 = logname5.split("-")[-2]
         round1_3a = []
@@ -208,10 +230,10 @@ def plot(res, str, path):
         winningrate4_3a = []
         f4_3a = open(path+"/"+logname4_3a)
         line4_3a = f4_3a.readline()
-        # round5 = []
-        # winningrate5 = []
-        # f5 = open(path+"/"+logname5)
-        # line5 = f5.readline()
+        round5_3a = []
+        winningrate5_3a = []
+        f5_3a = open(path+"/"+logname5_3a)
+        line5_3a = f5_3a.readline()
         while line1_3a:
             round1_3a.append(float(line1_3a.split(' ')[0]))
             winningrate1_3a.append(float(line1_3a.split(' ')[1].replace('\n', '').replace('\r', '')))
@@ -232,26 +254,26 @@ def plot(res, str, path):
             winningrate4_3a.append(float(line4_3a.split(' ')[1].replace('\n', '').replace('\r', '')))
             line4_3a = f4_3a.readline()
         f4_3a.close()
-        # while line5:
-        #     round5.append(float(line5.split(' ')[0]))
-        #     winningrate5.append(float(line5.split(' ')[1].replace('\n', '').replace('\r', '')))
-        #     line5 = f5.readline()
-        # f5.close()
+        while line5_3a:
+            round5_3a.append(float(line5_3a.split(' ')[0]))
+            winningrate5_3a.append(float(line5_3a.split(' ')[1].replace('\n', '').replace('\r', '')))
+            line5_3a = f5_3a.readline()
+        f5_3a.close()
 
-        graph = plt.plot(round1_3a, winningrate1_3a, round2_3a, winningrate2_3a, round3_3a, winningrate3_3a, round4_3a, winningrate4_3a)
+        graph = plt.plot(round1_3a, winningrate1_3a, round2_3a, winningrate2_3a, round3_3a, winningrate3_3a, round4_3a, winningrate4_3a,round5_3a,winningrate5_3a)
         plt.setp(graph[0], color='blue', label=label1_3a)
         plt.setp(graph[1], color='red', label=label2_3a)
         plt.setp(graph[2], color='orange', label=label3_3a)
         plt.setp(graph[3], color='purple', label=label4_3a)
-        # plt.setp(graph[4], color='gray', label=label5)
-        plt.legend(loc=4)
+        plt.setp(graph[4], color='gray', label=label5_3a)
+        plt.legend(loc=5)
         plt.xlabel('# of 100 rounds')
         plt.ylabel('Winning rate')
         plt.title("Comparison of training performance using different values of e")
         plt.savefig(path_save+"result/"+"3a"+".png")
         plt.show()
 if __name__ == '__main__':
-    path = r"../robots/org/ubc/cpen/robotlut/LUTRobot.data/log_f2/" # training result  documents path
+    path = r"../result/" # training result  documents path
     files = os.listdir(path) # acquire all document name under a folder
     # file = "IRobot-winningRate.log"
     #

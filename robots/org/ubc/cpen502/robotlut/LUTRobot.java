@@ -41,10 +41,10 @@ public class LUTRobot extends AdvancedRobot {
     public double dis = 0.0;
 
     // Whether take immediate rewards
-    public static boolean takeImmediate = false;
+    public static boolean takeImmediate = true;
 
     // Whether take on-policy algorithm
-    public static boolean onPolicy = false;
+    public static boolean onPolicy = true;
 
     // Discount factor
     private double gamma = 0.9;
